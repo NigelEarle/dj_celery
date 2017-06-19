@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djcelery',
     'posts',
+    'djcelery',
 ]
 
 MIDDLEWARE = [
@@ -80,12 +80,8 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dj_celery',
-        'USER': 'nwre87',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -129,9 +125,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 BROKER_URL = 'amqp://nigel:nigel@localhost:5672//'
-CELERY_RESULT_BACKEND = 'db+postgresql://nwre87@localhost/dj_celery'
+CELERY_RESULT_BACKEND = "db+sqlite:///src.db.sqlite3"
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALZERR = 'json'
 CELERY_TIMEZONE = 'Hawaii/Aleutian'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'nwre.dev@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

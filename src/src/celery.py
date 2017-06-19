@@ -6,10 +6,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.settings")
 
 from django.conf import settings
 
-app = Celery(
-  "src",
-  broker='amqp://nigel:nigel@localhost:5672//'
-)
+app = Celery("src")
 
 app.config_from_object('django.conf:settings')
 

@@ -1,19 +1,14 @@
 from celery import shared_task, current_task
-from numpy import random
-from scipy.fftpack import fft
+from celery.utils.log import get_task_logger
+from django.core.mail import send_mail
 
-@shared_task
-def fft_random(n):
-  for i in range(n):
-    x = random.normal(0, 0.1, 2000)
-    y = fft(x)
-    if(i%30 == 0):
-      process_percent = int(100 * float(i) / float(n))
-      current_task.update(state="PROGRESS", meta={"process_percent": process_percent})
-  return random.random()
+logger = get_task_logger(__name__)
+
+@shared_task(name="feedback_email_task")
+def feedback_email_task(name, email, message):
+  return send_email(name, email, message)
 
 
-# CALL TASKS FROM WHEREVER
-
-# from .tasks import fft_random
-# job = fft_random.delay(int(n))
+def send_email(name, email, message):
+  print (name)
+  send_mail(name, message, None, [email], fail_silently=False)

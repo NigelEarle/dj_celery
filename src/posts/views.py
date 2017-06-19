@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.core import serializers
+
 from .forms import CreateForm
 from .models import Post
-
+from .tasks import feedback_email_task
 
 # Create your views here.
 
@@ -17,7 +19,7 @@ def create(request):
     instance = form.save(commit=False)
     instance.user = request.user
     instance.save()
-    
+    job = feedback_email_task.delay("Sending email on post", "nigel@earle.io", "HELLOOOO")
   context = {
     "form": form,
   }
