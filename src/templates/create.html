@@ -1,1 +1,16 @@
-<h1>Create</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Create Post</h1>
+
+  <form action="" method="POST"> {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
+
