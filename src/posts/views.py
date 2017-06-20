@@ -16,10 +16,13 @@ def detail(request, id=None):
 def create(request):
   form = CreateForm(request.POST)
   if form.is_valid():
+    title = form.cleaned_data["title"]
+    content = form.cleaned_data["content"]
+
     instance = form.save(commit=False)
     instance.user = request.user
     instance.save()
-    job = feedback_email_task.delay("Sending email on post", "nigel@earle.io", "HELLOOOO")
+    job = feedback_email_task.delay(title, "nigel@earle.io", content)
   context = {
     "form": form,
   }

@@ -8,7 +8,5 @@ logger = get_task_logger(__name__)
 def feedback_email_task(name, email, message):
   return send_email(name, email, message)
 
-
 def send_email(name, email, message):
-  print (name)
   send_mail(name, message, None, [email], fail_silently=False)
